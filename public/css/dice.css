@@ -126,6 +126,10 @@ color: #eee !important;
 	left: 15% !important;
 }
 
+.hiddenDice{
+  display: none;
+}
+
   @keyframes animate {
 	50%{
 	    transform: rotateX(145deg) rotateY(165deg) rotateZ(135deg);

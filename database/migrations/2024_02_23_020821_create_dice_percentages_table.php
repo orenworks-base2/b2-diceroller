@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dice_results', function (Blueprint $table) {
+        Schema::create('dice_percentages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onUpdate('restrict')->onDelete('cascade');
-            $table->string('diceNum');
-            $table->string('result');
+            $table->string('dice_num');
+            $table->string('num1');
+            $table->string('num2');
+            $table->string('num3');
+            $table->string('num4');
+            $table->string('num5');
+            $table->string('num6');
             $table->timestamps();
         });
     }
@@ -25,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dice_results');
+        Schema::dropIfExists('dice_percentages');
     }
 };

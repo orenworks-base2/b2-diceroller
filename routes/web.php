@@ -32,3 +32,5 @@ Route::post( 'login', [ AuthenticatedSessionController::class, 'store' ] )->midd
 
 Route::get( '/home', [ DiceResultController::class, 'index' ] )->name( 'web.home' );
 
+Route::post( '/diceResult', [ DiceResultController::class, 'getDiceResult' ] )->name( 'web.getDiceResult' );
+

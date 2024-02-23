@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class diceResult extends Model
+class DicePercentage extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'diceNum',
-        'result',
+        'dice_num',
+        'num1',
+        'num2',
+        'num3',
+        'num4',
+        'num5',
+        'num6',
     ];
-
-    public function user() {
-        return $this->belongsTo( User::class, 'user_id' );
-    }
 }

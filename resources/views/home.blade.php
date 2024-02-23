@@ -12,6 +12,7 @@
 		
 	</head>
 	<body>
+    @if($haveChange)
 		<?php 
             $num1 = rand(1,100);
             $num2 = rand(1,100);
@@ -62,7 +63,8 @@
         </div>
         <div class="cube5 cube list-inline-item" id="cube">
         </div>
-        <div class=" fixed-bottom">
+        <form id="setting_dice" class="fixed-bottom" onsubmit=" event.preventDefault(); ">
+            @csrf
             <select id="num_dice">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -70,8 +72,8 @@
                 <option value="4">4</option>
                 <option value="5">5</option>
             </select>
-            <button id="roll_btn"> roll </button>
-        </div>
+            <button class="dice_btn" id="roll_btn"> roll </button>
+        </form>
 	</div>
     
 	<script>
@@ -91,55 +93,46 @@
 
             $('#roll_btn').click(function(){
                 
+                getDiceResult();
                 $('.cube').css('animation', 'animate 2s linear');
-
-                diceNum = $('#num_dice').val();
-                updateRotation( diceNum );
-
+                $(' #setting_dice ').addClass("hiddenDice");
+                
             });
 
-            function updateRotation(cubenum) {
-                angleArray = [[0,0,0],[-310,-362,-38],[-400,-320,-2],[135,-217,-88],[-224,-317,5],[-47,-219,-81],[-133,-360,-53]];
-                
-                
-                for(var i=1; i<=cubenum; i++){
+            function getDiceResult(){
 
-                    num1 = {{ App\Helpers\Helper::percentageDice($num1,1) }};
-                    num2 = {{ App\Helpers\Helper::percentageDice($num2,2) }};
-                    num3 = {{ App\Helpers\Helper::percentageDice($num3,3) }};
-                    num4 = {{ App\Helpers\Helper::percentageDice($num4,4) }};
-                    num5 = {{ App\Helpers\Helper::percentageDice($num5,5) }};
-                    
-                    switch(i){
-                        case 1:
-                        num = num1;
-                        break;
-                        case 2:
-                        num = num2;
-                        break;
-                        case 3:
-                        num = num3;
-                        break;
-                        case 4:
-                        num = num4;
-                        break;
-                        case 5:
-                        num = num5;
-                        break;
-                        case 6:
-                        num = num6;
-                        break;
+                $.ajax({
+                    url: ' {{ route('web.getDiceResult') }} ',
+                    method: 'POST',
+                    data: {
+                        diceNum: $('#num_dice').val(),
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function( response ){
+                        updateRotation(response.data);
+                    },
+                    error: function( error ){
+                        console.log( error );
                     }
+                });
 
-
-                    $('.cube' + i).css('transform', 'rotateX('+angleArray[num][0]+'deg) rotateY('+angleArray[num][1]+'deg) rotateZ('+angleArray[num][2]+'deg)');
-                }
-                
-                console.log(num1,num2,num3,num4,num5);
             }
+
+            function updateRotation(result) {
+                angleArray = [[0,0,0],[-310,-362,-38],[-400,-320,-2],[135,-217,-88],[-224,-317,5],[-47,-219,-81],[-133,-360,-53]];
+                               
+                $.each( result, function( index, value ) {
+                    cubeIndex = index + 1;
+                    $('.cube' + cubeIndex).css('transform', 'rotateX('+angleArray[value][0]+'deg) rotateY('+angleArray[value][1]+'deg) rotateZ('+angleArray[value][2]+'deg)');
+                    console.log(value);
+                });
+            }
+
         });
 
     </script>
-    
+    @else
+    <p> No change for roll </p>
+    @endif
 	</body>
 </html>
