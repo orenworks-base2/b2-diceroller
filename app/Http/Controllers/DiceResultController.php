@@ -17,8 +17,21 @@ class DiceResultController extends Controller
 
     }
 
+    public function admin() {
+        
+        return view( 'changePercentege' );
+
+    }
+
     public function getDiceResult( Request $request ){
         return DiceService::getDiceResult( $request );
     }
 
+    public function changePercentage( Request $request ){
+        return DiceService::changePercentage( $request );
+    }
+
+    public function getPercentage(){
+        return DiceService::getPercentage();
+    }
 }

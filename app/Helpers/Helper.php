@@ -20,15 +20,15 @@ class Helper {
         for( $i = 1; $i <= $numDice; $i++ ){
             $dice = DicePercentage::where( 'dice_num', $i )->first();
 
-            if($numrand <= $dice->num1){
+            if( $numrand <= $dice->num1 ){
                 return 1;
-            }else if($numrand <= $dice->num2){
+            }else if( $numrand <= $dice->num2 ){
                 return 2;
-            }else if($numrand <= $dice->num3){
+            }else if( $numrand <= $dice->num3 ){
                 return 3;
-            }else if($numrand <= $dice->num4){
+            }else if( $numrand <= $dice->num4 ){
                 return 4;
-            }else if($numrand <= $dice->num5){
+            }else if( $numrand <= $dice->num5 ){
                 return 5;
             }else{
                 return 6;

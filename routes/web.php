@@ -31,6 +31,8 @@ $limiter = config( 'fortify.limiters.login' );
 Route::post( 'login', [ AuthenticatedSessionController::class, 'store' ] )->middleware( array_filter( [ 'guest:web', $limiter ? 'throttle:'.$limiter : null ] ) )->name( 'web.user_login' );
 
 Route::get( '/home', [ DiceResultController::class, 'index' ] )->name( 'web.home' );
-
 Route::post( '/diceResult', [ DiceResultController::class, 'getDiceResult' ] )->name( 'web.getDiceResult' );
+Route::post( '/changedicePercentage', [ DiceResultController::class, 'changePercentage' ] )->name( 'web.changedicePercentage' );
+Route::get( '/getPercentage', [ DiceResultController::class, 'getPercentage' ] )->name( 'web.getPercentage' );
+Route::get( '/admin', [ DiceResultController::class, 'admin' ] )->name( 'web.admin' );
 

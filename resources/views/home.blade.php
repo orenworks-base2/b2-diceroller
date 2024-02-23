@@ -13,13 +13,6 @@
 	</head>
 	<body>
     @if($haveChange)
-		<?php 
-            $num1 = rand(1,100);
-            $num2 = rand(1,100);
-            $num3 = rand(1,100);
-            $num4 = rand(1,100);
-            $num5 = rand(1,100);
-        ?>
 	<div class="container list-inline">
 		<div class="cube1 cube list-inline-item" id="cube">
 			<div class="front">
@@ -94,7 +87,7 @@
             $('#roll_btn').click(function(){
                 
                 getDiceResult();
-                $('.cube').css('animation', 'animate 2s linear');
+                //$('.cube').css('animation', 'animate 2s linear');
                 $(' #setting_dice ').addClass("hiddenDice");
                 
             });
@@ -126,6 +119,30 @@
                     $('.cube' + cubeIndex).css('transform', 'rotateX('+angleArray[value][0]+'deg) rotateY('+angleArray[value][1]+'deg) rotateZ('+angleArray[value][2]+'deg)');
                     console.log(value);
                 });
+
+                angleArray = [[0,0,0],[-310,-362,-38],[-400,-320,-2],[135,-217,-88],[-224,-317,5],[-47,-219,-81],[-133,-360,-53]];
+
+                $.each(result, function(index, value) {
+                    cubeIndex = index + 1;
+                    var rotation = angleArray[value];
+                    var animationName = 'rotateAnimation' + cubeIndex; 
+                    
+                    var keyframes = '@keyframes ' + animationName + ' {\
+                                        50% { transform: rotateX(145deg) rotateY(165deg) rotateZ(135deg); top: 20%; }\
+                                        100% { transform: rotateX(' + rotation[0] + 'deg) rotateY(' + rotation[1] + 'deg) rotateZ(' + rotation[2] + 'deg); top: 40%; }\
+                                    }';
+                    
+                    $('head').append('<style>' + keyframes + '</style>');
+                    
+                    $('.cube' + cubeIndex).css({
+                        'animation-name': animationName,
+                        'animation-duration': '2s', 
+                        'animation-timing-function': 'linear'
+                    });
+                });
+
+
+
             }
 
         });
