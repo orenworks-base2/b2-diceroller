@@ -173,6 +173,7 @@
                     _token: '{{ csrf_token() }}',
                 },
                 success: function( response ){
+                    alert(" Save percentage successful. ");
                     console.log(response.data);
                 },
                 error: function( error ){

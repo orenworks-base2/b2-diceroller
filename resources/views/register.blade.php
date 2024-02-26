@@ -115,7 +115,7 @@
     <div class="login-page">
     <h1 class="text-center">Dice Roller</h1>
     <div class="form">
-        <form class="login_form" action="#" method="POST">
+        <form class="login_form" action=" {{ route('web.login') }} " method="POST">
             @csrf
             <h3>Register</h3>
             <input name="phone_number" id="reg_phone" type="text" placeholder="Phone Number"/>
@@ -143,10 +143,12 @@
                 _token: '{{ csrf_token() }}',
             },
             success: function( response ){
-                $( '#modal_subject' ).html( 'Congratulations' );
-                $( '#modal_desc' ).html( 'Register Successful' );
-                $( '#exampleModal' ).removeClass( 'hidden' );
+                //$( '#modal_subject' ).html( 'Congratulations' );
+                //$( '#modal_desc' ).html( 'Register Successful' );
+                //$( '#exampleModal' ).removeClass( 'hidden' );
                 console.log( response );
+                alert(" Register successful. ");
+
             },
             error: function( error ){
                 console.log( 'hello' );
