@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,51 +22,57 @@
                 <label class="col-sm">Percentage Number 4</label>
                 <label class="col-sm">Percentage Number 5</label>
                 <label class="col-sm">Percentage Number 6</label>
+                <label class="col-sm">Total</label>
             </div>
             <div class="dice row" id="dice1">
                 <input class="col-sm" type="text" id="dice1_num" value="1" readonly>
-                <input class="col-sm" type="text" id="dice1_num1" name="num1[]">
-                <input class="col-sm" type="text" id="dice1_num2" name="num2[]">
-                <input class="col-sm" type="text" id="dice1_num3" name="num3[]">
-                <input class="col-sm" type="text" id="dice1_num4" name="num4[]">
-                <input class="col-sm" type="text" id="dice1_num5" name="num5[]">
-                <input class="col-sm" type="text" id="dice1_num6" name="num6[]">
+                <input class="col-sm dice_input" type="text" id="dice1_num1">
+                <input class="col-sm dice_input" type="text" id="dice1_num2">
+                <input class="col-sm dice_input" type="text" id="dice1_num3">
+                <input class="col-sm dice_input" type="text" id="dice1_num4">
+                <input class="col-sm dice_input" type="text" id="dice1_num5">
+                <input class="col-sm dice_input" type="text" id="dice1_num6">
+                <input class="col-sm" type="text" id="dice1_total" readonly>
             </div>
             <div class="row" id="dice2">
                 <input class="col-sm" type="text" id="dice2_num" value="2" readonly>
-                <input class="col-sm" type="text" id="dice2_num1" name="num1[]">
-                <input class="col-sm" type="text" id="dice2_num2" name="num2[]">
-                <input class="col-sm" type="text" id="dice2_num3" name="num3[]">
-                <input class="col-sm" type="text" id="dice2_num4" name="num4[]">
-                <input class="col-sm" type="text" id="dice2_num5" name="num5[]">
-                <input class="col-sm" type="text" id="dice2_num6" name="num6[]">
+                <input class="col-sm dice_input" type="text" id="dice2_num1">
+                <input class="col-sm dice_input" type="text" id="dice2_num2">
+                <input class="col-sm dice_input" type="text" id="dice2_num3">
+                <input class="col-sm dice_input" type="text" id="dice2_num4">
+                <input class="col-sm dice_input" type="text" id="dice2_num5">
+                <input class="col-sm dice_input" type="text" id="dice2_num6">
+                <input class="col-sm" type="text" id="dice2_total" readonly>
             </div>
             <div class="row" id="dice3">
                 <input class="col-sm" type="text" id="dice3_num" value="3" readonly>
-                <input class="col-sm" type="text" id="dice3_num1" name="num1[]">
-                <input class="col-sm" type="text" id="dice3_num2" name="num2[]">
-                <input class="col-sm" type="text" id="dice3_num3" name="num3[]">
-                <input class="col-sm" type="text" id="dice3_num4" name="num4[]">
-                <input class="col-sm" type="text" id="dice3_num5" name="num5[]">
-                <input class="col-sm" type="text" id="dice3_num6" name="num6[]">
+                <input class="col-sm dice_input" type="text" id="dice3_num1">
+                <input class="col-sm dice_input" type="text" id="dice3_num2">
+                <input class="col-sm dice_input" type="text" id="dice3_num3">
+                <input class="col-sm dice_input" type="text" id="dice3_num4">
+                <input class="col-sm dice_input" type="text" id="dice3_num5">
+                <input class="col-sm dice_input" type="text" id="dice3_num6">
+                <input class="col-sm" type="text" id="dice3_total" readonly>
             </div>
             <div class="row" id="dice4">
                 <input class="col-sm" type="text" id="dice4_num" value="4" readonly>
-                <input class="col-sm" type="text" id="dice4_num1" name="num1[]">
-                <input class="col-sm" type="text" id="dice4_num2" name="num2[]">
-                <input class="col-sm" type="text" id="dice4_num3" name="num3[]">
-                <input class="col-sm" type="text" id="dice4_num4" name="num4[]">
-                <input class="col-sm" type="text" id="dice4_num5" name="num5[]">
-                <input class="col-sm" type="text" id="dice4_num6" name="num6[]">
+                <input class="col-sm dice_input" type="text" id="dice4_num1">
+                <input class="col-sm dice_input" type="text" id="dice4_num2">
+                <input class="col-sm dice_input" type="text" id="dice4_num3">
+                <input class="col-sm dice_input" type="text" id="dice4_num4">
+                <input class="col-sm dice_input" type="text" id="dice4_num5">
+                <input class="col-sm dice_input" type="text" id="dice4_num6">
+                <input class="col-sm" type="text" id="dice4_total" readonly>
             </div>
             <div class="row" id="dice5">
                 <input class="col-sm" type="text" id="dice5_num" value="5" readonly>
-                <input class="col-sm" type="text" id="dice5_num1" name="num1[]">
-                <input class="col-sm" type="text" id="dice5_num2" name="num2[]">
-                <input class="col-sm" type="text" id="dice5_num3" name="num3[]">
-                <input class="col-sm" type="text" id="dice5_num4" name="num4[]">
-                <input class="col-sm" type="text" id="dice5_num5" name="num5[]">
-                <input class="col-sm" type="text" id="dice5_num6" name="num6[]">
+                <input class="col-sm dice_input" type="text" id="dice5_num1">
+                <input class="col-sm dice_input" type="text" id="dice5_num2">
+                <input class="col-sm dice_input" type="text" id="dice5_num3">
+                <input class="col-sm dice_input" type="text" id="dice5_num4">
+                <input class="col-sm dice_input" type="text" id="dice5_num5">
+                <input class="col-sm dice_input" type="text" id="dice5_num6">
+                <input class="col-sm" type="text" id="dice5_total" readonly>
             </div>
             <form id="form_dice" class="fixed-bottom" onsubmit=" event.preventDefault(); ">
                 <button class="btn" id="save_btn"> Save </button>
@@ -79,6 +85,11 @@
 
             $( '#save_btn' ).click(function(){
                 storeDicePercentage();
+                calTotal();
+            });
+
+            $( '.dice_input' ).change(function(){
+                calTotal();
             });
 
         });
@@ -110,6 +121,8 @@
                         $( '#dice' + diceIndex +'_num6' ).val(num6);
 
                     });
+                    
+                    calTotal();
 
                 },
                 error: function( error ){
@@ -183,7 +196,19 @@
 
             
         }
-            
+
+        function calTotal(){
+            for(let i = 1; i <= 5; i++){
+
+                let total = 0;
+
+                for (let j = 1; j <= 6; j++) {
+                    total += parseInt($('#dice' + i + '_num' + j).val()) || 0;
+                }
+
+                $( '#dice' + i + '_total' ).val( total );
+            }
+        }
 
     </script>
 </html>

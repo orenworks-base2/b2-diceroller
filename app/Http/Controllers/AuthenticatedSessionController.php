@@ -18,6 +18,10 @@ use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Http\Requests\LoginRequest;
 
+use App\Services\{
+    UserService,
+};
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -47,6 +51,12 @@ class AuthenticatedSessionController extends Controller
     public function create(Request $request): LoginViewResponse
     {
         return app(LoginViewResponse::class);
+    }
+
+    public function createUser( Request $request ) {
+        return UserService::createUser( $request )->then(function ($request) {
+            return app(LoginResponse::class);
+        });
     }
 
     /**

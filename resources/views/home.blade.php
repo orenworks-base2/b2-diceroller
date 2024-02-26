@@ -16,36 +16,16 @@
 	<div class="container list-inline">
 		<div class="cube1 cube list-inline-item" id="cube">
 			<div class="front">
-				<span class="fas fa-circle"></span>
 			</div>
 			<div class="back">
-					<pre class="firstPre"><span class="fas fa-circle"></span>    <span class="fas fa-circle"></span>    <span class="fas fa-circle"></span></pre><br>
-					<pre class="secondPre"><span class="fas fa-circle"></span>    <span class="fas fa-circle"></span>    <span class="fas fa-circle"></span></pre>
 			</div>
 			<div class="top">
-				<span class="fas fa-circle"></span>
-				<span class="fas fa-circle"></span>
 			</div>
 			<div class="left">
-				<span class="fas fa-circle"></span>
-				<span class="fas fa-circle"></span>
-				<span class="fas fa-circle"></span>
-
 			</div>
 			<div class="right">
-				<span class="fas fa-circle"></span>
-				<span class="fas fa-circle"></span>
-				<span class="fas fa-circle"></span>
-				<span class="fas fa-circle"></span>
-				<span class="fas fa-circle"></span>
-
 			</div>
 			<div class="bottom">
-				<span class="fas fa-circle"></span>
-				<span class="fas fa-circle"></span>
-				<span class="fas fa-circle"></span>
-				<span class="fas fa-circle"></span>
-
 			</div>
 		</div>
 		<div class="cube2 cube list-inline-item" id="cube">
@@ -79,15 +59,13 @@
                     $('.cube' + i).html('');
                 }
                 for(let i= 2; i<= numDice; i++){
-                    $('.cube' + i).html(diceFacesHTML.repeat(numDice));
+                    $('.cube' + i).html(diceFacesHTML.repeat(1));
                 }
             });
 
 
             $('#roll_btn').click(function(){
-                
                 getDiceResult();
-                //$('.cube').css('animation', 'animate 2s linear');
                 $(' #setting_dice ').addClass("hiddenDice");
                 
             });

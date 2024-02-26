@@ -93,10 +93,11 @@ class DiceService {
 
         DB::beginTransaction();
 
-        $currentUser = auth()->user();
-        $user_id = $currentUser->id;
+        
 
         try{
+            $currentUser = auth()->user();
+            $user_id = $currentUser->id;
             
             for( $i = 1; $i <= $request->diceNum ; $i++){
                 $result = new diceResult;

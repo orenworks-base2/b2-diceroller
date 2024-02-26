@@ -19,10 +19,11 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
-
         return User::create([
             'phone_number' => $input['phone_number'],
             'password' => Hash::make($input['password']),
         ]);
+
+        
     }
 }

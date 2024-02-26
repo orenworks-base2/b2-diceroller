@@ -15,6 +15,9 @@ use App\Models\{
 
 use Illuminate\Validation\Rules\Password;
 
+use Illuminate\Support\Facades\Auth;
+use Laravel\Fortify\Fortify;
+
 class UserService {
 
     public static function createUser( $request ) {
@@ -48,14 +51,20 @@ class UserService {
                 'password' => Hash::make( $request->password ),
             ];
 
-            $createUser = self::create( $createUserObject );
+            $createUser = User::create( $createUserObject['user'] );
 
             DB::commit();
 
-            return response()->json( [
-                'message_key' => 'register_success',
-                'data' => [],
-            ] );
+            if (Auth::attempt(['phone_number' => $request->phone_number, 'password' => $request->password])) {
+                return response()->json([
+                    'message_key' => 'register_and_login_success',
+                    'data' => [],
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'Login failed after registration'
+                ], 401);
+            }
 
         } catch ( \Throwable $th ) {
 
@@ -65,13 +74,6 @@ class UserService {
                 'message' => $th->getMessage() . ' in line: ' . $th->getLine()
             ], 500 );
         }
-    }
-
-    private static function create( $data ) {
-
-        $createUser = User::create( $data['user'] );
-
-        return $createUser;
     }
 
 }

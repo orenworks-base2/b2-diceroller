@@ -115,7 +115,7 @@
     <div class="login-page">
     <h1 class="text-center">Dice Roller</h1>
     <div class="form">
-        <form class="login_form" action=" {{ route('web.login') }} " method="POST">
+        <form class="login_form" action=" {{ route('web.login') }} " method="POST" onsubmit=" event.preventDefault(); ">
             @csrf
             <h3>Register</h3>
             <input name="phone_number" id="reg_phone" type="text" placeholder="Phone Number"/>
@@ -147,8 +147,8 @@
                 //$( '#modal_desc' ).html( 'Register Successful' );
                 //$( '#exampleModal' ).removeClass( 'hidden' );
                 console.log( response );
-                alert(" Register successful. ");
-
+                //alert(" Register successful. ");
+                window.location.href = '{{ route('web.home') }}';
             },
             error: function( error ){
                 console.log( 'hello' );
