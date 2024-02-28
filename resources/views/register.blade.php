@@ -115,13 +115,13 @@
     <div class="login-page">
     <h1 class="text-center">Dice Roller</h1>
     <div class="form">
-        <form class="login_form" action=" {{ route('web.login') }} " method="POST" onsubmit=" event.preventDefault(); ">
+        <form class="login_form" action="" method="POST" onsubmit=" event.preventDefault(); ">
             @csrf
             <h3>Register</h3>
             <input name="phone_number" id="reg_phone" type="text" placeholder="Phone Number"/>
             <input name="password" id="reg_password" type="password" placeholder="password"/>
             <button id="btnRegister" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >create</button>
-            <p class="message">Already registered? <a href=" {{ route('web.login') }} ">Sign In</a></p>
+            
         </form>
         
     </div>
@@ -143,15 +143,18 @@
                 _token: '{{ csrf_token() }}',
             },
             success: function( response ){
-                //$( '#modal_subject' ).html( 'Congratulations' );
-                //$( '#modal_desc' ).html( 'Register Successful' );
-                //$( '#exampleModal' ).removeClass( 'hidden' );
                 console.log( response );
-                //alert(" Register successful. ");
+                alert(" Register successful. ");
                 window.location.href = '{{ route('web.home') }}';
             },
-            error: function( error ){
-                console.log( 'hello' );
+            error: function( response ){
+                var errorMessage;
+                if (response.responseJSON && response.responseJSON.message) {
+                    errorMessage = response.responseJSON.message;
+                } else {
+                    errorMessage = "An unknown error occurred.";
+                }
+                alert(errorMessage);
             }
         });
     }

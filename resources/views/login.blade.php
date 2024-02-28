@@ -115,13 +115,13 @@
     <div class="login-page">
     <h1 class="text-center">Dice Roller</h1>
     <div class="form">
-        <form id="login_form" action="{{ route( 'web.user_login' ) }}" method="POST">
+        <form id="login_form" action="{{ route( 'admin.admin_login' ) }}" method="POST">
             @csrf
             <h3>Login</h3>
             <input name="username" type="text" placeholder="Phone Number"/>
             <input name="password" type="password" placeholder="password"/>
             <button id="btn_login">login</button>
-            <p class="message">Not registered? <a href=" {{ route('web.register') }} ">Create an account</a></p>
+            
         </form>
     </div>
     </div>

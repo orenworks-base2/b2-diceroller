@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dice_results', function (Blueprint $table) {
+        Schema::create('dice_settings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onUpdate('restrict')->onDelete('cascade');
             $table->string('diceNum');
-            $table->string('result');
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dice_results');
+        Schema::dropIfExists('dice_setrings');
     }
 };

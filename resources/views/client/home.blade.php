@@ -14,71 +14,58 @@
 	<body>
     @if($haveChange)
 	<div class="container list-inline">
-		<div class="cube1 cube list-inline-item" id="cube">
-			<div class="front">
-			</div>
-			<div class="back">
-			</div>
-			<div class="top">
-			</div>
-			<div class="left">
-			</div>
-			<div class="right">
-			</div>
-			<div class="bottom">
-			</div>
-		</div>
-		<div class="cube2 cube list-inline-item" id="cube">
-        </div>
-        <div class="cube3 cube list-inline-item" id="cube">
-        </div>
-        <div class="cube4 cube list-inline-item" id="cube">
-        </div>
-        <div class="cube5 cube list-inline-item" id="cube">
-        </div>
-        <form id="setting_dice" class="fixed-bottom" onsubmit=" event.preventDefault(); ">
-            @csrf
-            <select id="num_dice">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
+        <button class="backRegister"> < </button>
+        <div id="setting_dice" class="fixed-bottom">
             <button class="dice_btn" id="roll_btn"> roll </button>
-        </form>
+        </div>
+        <div class="div_dise">
+            <div class="cube5 cube list-inline-item" id="cube">
+            </div>
+            <div class="cube3 cube list-inline-item" id="cube">
+            </div>
+            <div class="cube1 cube list-inline-item" id="cube">
+                <div class="front">
+                </div>
+                <div class="back">
+                </div>
+                <div class="top">
+                </div>
+                <div class="left">
+                </div>
+                <div class="right">
+                </div>
+                <div class="bottom">
+                </div>
+            </div>
+            <div class="cube2 cube list-inline-item" id="cube">
+            </div>
+            <div class="cube4 cube list-inline-item" id="cube">
+            </div>
+        </div>
+        
+        
 	</div>
     
 	<script>
         $(document).ready(function() {
 
-            $('#num_dice').change(function(){
-                var numDice = $(this).val();
-                var diceFacesHTML = $('.cube1').html();
-                for(let i= 2; i<= 5; i++){
-                    $('.cube' + i).html('');
-                }
-                for(let i= 2; i<= numDice; i++){
-                    $('.cube' + i).html(diceFacesHTML.repeat(1));
-                }
-            });
-
+            var diceFacesHTML = $('.cube1').html();
+            for(let i= 2; i<= 5; i++){
+                $('.cube' + i).html(diceFacesHTML.repeat(1));
+                $('.cube' + i).hide();
+            }
+            diceNum();
 
             $('#roll_btn').click(function(){
                 getDiceResult();
                 $(' #setting_dice ').addClass("hiddenDice");
-                
             });
 
             function getDiceResult(){
 
                 $.ajax({
                     url: ' {{ route('web.getDiceResult') }} ',
-                    method: 'POST',
-                    data: {
-                        diceNum: $('#num_dice').val(),
-                        _token: '{{ csrf_token() }}',
-                    },
+                    method: 'GET',
                     success: function( response ){
                         updateRotation(response.data);
                     },
@@ -87,6 +74,24 @@
                     }
                 });
 
+            }
+
+            function diceNum(){
+                $.ajax({
+                    url: ' {{ route('web.getDiceNumber') }} ',
+                    method: 'GET',
+                    success: function( response ){
+                        var numDice = response.data;
+                        var diceFacesHTML = $('.cube1').html();
+                        
+                        for(let i= 2; i<= numDice; i++){
+                            $('.cube' + i).show();
+                        }
+                    },
+                    error: function( error ){
+                        console.log( error );
+                    }
+                });
             }
 
             function updateRotation(result) {

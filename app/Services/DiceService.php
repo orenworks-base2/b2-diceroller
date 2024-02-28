@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Http\Request;
 use App\Helpers\Helper;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\{
@@ -14,9 +15,12 @@ use Illuminate\Support\Facades\{
 use App\Models\{
     DicePercentage,
     diceResult,
+    DiceSetting,
+    User,
 };
 
-use Illuminate\Validation\Rules\Password;
+use Carbon\Carbon;
+
 
 class DiceService {
 
@@ -29,6 +33,15 @@ class DiceService {
             'data' => $resultDice,
         ] );
     }
+
+    public static function getDiceNumber(){
+        $dicenum = DiceSetting::first();
+
+        return response()->json( [
+            'message_key' => 'get_Percentage_success',
+            'data' => $dicenum->diceNum,
+        ] );
+    } 
 
     public static function changePercentage( $request ){
 
@@ -46,6 +59,10 @@ class DiceService {
                 $dicePercentage->num6 = $request->diceData['num6'][$i-1] + $dicePercentage->num5;
                 $dicePercentage->save();
             }
+
+            $dicenum = DiceSetting::first();
+            $dicenum->diceNum = $request->diceNum;
+            $dicenum->save();
 
             DB::commit();
 
@@ -70,21 +87,23 @@ class DiceService {
         $currentUser = auth()->user();
         $user_id = $currentUser->id;
 
-        $record = diceResult::where( 'user_id', $user_id )->first();
+        $user = user::find( $user_id );
 
-        if( $record ){
-            return false;
+        if( $user->result ){
+            //return false;
         }
 
         return true;
 
     }
 
-    public static function getDiceResult( $request ){
+    public static function getDiceResult(){
 
-        $result = [];
+        $dice = DiceSetting::first();
 
-        for( $i = 1; $i <= $request->diceNum; $i++ ){
+        $diceNum = $dice->diceNum; 
+
+        for( $i = 1; $i <= $diceNum; $i++ ){
 
             $numRand = rand(1,100);
             $resultDice[] = Helper::percentageDice( $numRand, $i );
@@ -99,14 +118,11 @@ class DiceService {
             $currentUser = auth()->user();
             $user_id = $currentUser->id;
             
-            for( $i = 1; $i <= $request->diceNum ; $i++){
-                $result = new diceResult;
-                $result->user_id = $user_id;
-                $result->diceNum = $i;
-                $result->result = $resultDice[ $i - 1 ];
-                $result->save();
-            }
-            
+            $user = user::find( $user_id );
+            $user->result = json_encode($resultDice);;
+            $user->change = 'done';
+            $user->save();
+
             DB::commit();
 
         } catch ( \Throwable $th ) {
@@ -123,7 +139,98 @@ class DiceService {
             'message_key' => 'get_Result_success',
             'data' => $resultDice,
         ] );
+    }
 
-        
+    public static function getResultUser( Request $request ){
+
+        $resultDice = User::select('phone_number', 'change', 'result', 'created_at');
+
+        $filterObject = self::filter( $request, $resultDice );
+        $User = $filterObject['model'];
+        $filter = $filterObject['filter'];
+
+        if ( $request->input( 'order.0.column' ) != 0 ) {
+            $dir = $request->input( 'order.0.dir' );
+            switch ( $request->input( 'order.0.column' ) ) {
+                case 1:
+                    $User->orderBy( 'phone_number', $dir );
+                    break;
+                case 2:
+                    $User->orderBy( 'change', $dir );
+                    break;
+                case 3:
+                    $User->orderBy( 'create_at', $dir );
+                    break;
+            }
+        }
+
+        $UserCount = $User->count();
+
+        $limit = $request->length;
+        $offset = $request->start;
+
+        $Users = $User->skip( $offset )->take( $limit )->get();
+
+        $User = User::select(
+            DB::raw( 'COUNT(users.id) as total'
+        ) );
+
+        $filterObject = self::filter( $request, $User );
+        $User = $filterObject['model'];
+        $filter = $filterObject['filter'];
+
+        $User = $User->first();
+
+        $data = [
+            'user' => $Users,
+            'draw' => $request->draw,
+            'recordsFiltered' => $filter ? $UserCount : $User->total,
+            'recordsTotal' => $filter ? User::count() : $UserCount,
+        ];
+
+        return $data;
+    }
+
+    private static function filter( $request, $model ){
+
+        $filter = false;
+
+        if ( !empty( $request->phone_number ) ) {
+            $model->where('users.phone_number', 'LIKE', '%'. $request->phone_number .'%')->get();
+            $filter = true;
+        }
+
+        if ( !empty( $request->change ) ) {
+            $model->where( 'users.change', $request->change );
+            $filter = true;
+        }
+
+        if ( !empty( $request->created_date ) ) {
+            if ( str_contains( $request->created_date, 'to' ) ) {
+                $dates = explode( ' to ', $request->created_date );
+
+                $startDate = explode( '-', $dates[0] );
+                $start = Carbon::create( $startDate[0], $startDate[1], $startDate[2], 0, 0, 0, 'Asia/Kuala_Lumpur' );
+                
+                $endDate = explode( '-', $dates[1] );
+                $end = Carbon::create( $endDate[0], $endDate[1], $endDate[2], 23, 59, 59, 'Asia/Kuala_Lumpur' );
+
+                $model->whereBetween( 'created_at', [ date( 'Y-m-d H:i:s', $start->timestamp ), date( 'Y-m-d H:i:s', $end->timestamp ) ] );
+            } else {
+
+                $dates = explode( '-', $request->created_date );
+
+                $start = Carbon::create( $dates[0], $dates[1], $dates[2], 0, 0, 0, 'Asia/Kuala_Lumpur' );
+                $end = Carbon::create( $dates[0], $dates[1], $dates[2], 23, 59, 59, 'Asia/Kuala_Lumpur' );
+
+                $model->whereBetween( 'created_at', [ date( 'Y-m-d H:i:s', $start->timestamp ), date( 'Y-m-d H:i:s', $end->timestamp ) ] );
+            }
+            $filter = true;
+        }
+
+        return [
+            'filter' => $filter,
+            'model' => $model,
+        ];
     }
 }

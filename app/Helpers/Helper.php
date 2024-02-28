@@ -9,10 +9,22 @@ use App\Models\{
 
 class Helper {
 
+    public static function assetVersion() {
+        return '?v=1.05';
+    }
+    
     public static function percentageDice( $num , $numDice){
 
         return self::calPercentage( $num, $numDice );
         
+    }
+
+    public static function columnIndex( $object, $search ) {
+        foreach ( $object as $key => $o ) {
+            if ( $o['id'] == $search ) {
+                return $key;
+            }
+        }
     }
 
     private static function calPercentage( $numrand, $numDice ){

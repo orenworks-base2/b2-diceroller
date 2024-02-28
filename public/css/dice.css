@@ -31,20 +31,20 @@ body{
 .container .cube .front{
   transform: translateZ(100px);
   background-size: 200px;
-  background-image: url("../photo/dice-six-faces-one.png");
+  background-image: url("../photo/dice1.png");
   height: 200px;
   width: 200px;
 }
 .container .cube .back{
   transform: translateZ(-100px) rotateY(180deg);
   background-size: 200px;
-  background-image: url("../photo/dice-six-faces-six.png");
+  background-image: url("../photo/dice6.png");
   height: 200px;
   width: 200px;
 }
 .container .cube .right{
   transform-origin: top right;
-  background-image: url("../photo/dice-six-faces-five.png");
+  background-image: url("../photo/dice5.png");
   background-size: 200px;
   transform: rotateY(-270deg) translateX(100px);
   height: 200px;
@@ -52,14 +52,15 @@ body{
 }
 .container .cube .left{
   background-size: 200px;
-  background-image: url("../photo/dice-six-faces-three.png");
+  background-image: url("../photo/dice3.png");
   transform-origin: center left;
   transform: rotateY(270deg) translateX(-100px);
   height: 200px;
   width: 200px;
+  
 }
 .container .cube .top{
-  background-image: url("../photo/dice-six-faces-two.png");
+  background-image: url("../photo/dice2.png");
   background-size: 200px;
   transform-origin: top center;
   transform: rotateX(-270deg) translateY(-100px);
@@ -68,7 +69,7 @@ body{
 }
 .container .cube .bottom{
   background-size: 200px;
-  background-image: url("../photo/dice-six-faces-four.png");
+  background-image: url("../photo/dice4.png");
   transform-origin: bottom center;
   transform: rotateX(270deg) translateY(100px);
   height: 200px;
@@ -126,7 +127,7 @@ body{
 }
 .cube{
 	display: inline-block;
-	margin-right: 100px;
+	margin-right: 60px;
 	margin-left: 0px;
   }
 
@@ -134,12 +135,21 @@ pre{
 color: #eee !important;
 }
 
-.fixed-bottom{
-	display: flex;
-	TOp: 80%;
+#num_dice{
+  margin-top: 20px !important;
+  display: inline-block;
 }
+
+#form_dice{
+  margin-top: 20px !important;
+  padding: 0px !important;
+  display: inline-block;
+  float: right;
+  border: 1px solid black;
+}
+
 .cube{
-	left: 15% !important;
+	left: 0% !important;
 }
 
 .hiddenDice{
@@ -155,4 +165,29 @@ color: #eee !important;
 		transform: rotateX(276deg) rotateY(256deg) rotateZ(246deg);
 		top: 40%;
 	}
+}
+.div_dise{
+  top: 50%;
+  height: 80%;
+}
+.fixed-bottom{
+  display: inline-block;
+  position: fixed;
+  top: 80%;
+  left: 44%;
+}
+.dice_btn{
+  padding: 20px 40px !important;
+  font-size: larger;
+}
+
+.backRegister{
+  float: left;
+  position: fixed;
+  top: 5%;
+  left: 1%;
+  font-size: larger;
+}
+.list-inline{
+  text-align: center;
 }

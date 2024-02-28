@@ -9,6 +9,7 @@
 
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<link rel="stylesheet" type="text/css" href=" {{ asset( 'css/dice.css' ) }} " />
 		
 	</head>
 	<body>
@@ -74,23 +75,40 @@
                 <input class="col-sm dice_input" type="text" id="dice5_num6">
                 <input class="col-sm" type="text" id="dice5_total" readonly>
             </div>
-            <form id="form_dice" class="fixed-bottom" onsubmit=" event.preventDefault(); ">
+
+            <select id="num_dice">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+
+            <form id="form_dice" onsubmit=" event.preventDefault(); ">
                 <button class="btn" id="save_btn"> Save </button>
             </form>
+
         </div>
+        
     </body>
     <script>
         $(document).ready(function() {
             getDicePercentage();
-
+            diceNum();
             $( '#save_btn' ).click(function(){
-                storeDicePercentage();
                 calTotal();
+                if( checkTotal() ){
+                    storeDicePercentage();
+                }else{
+                    alert('each dice must have total 100 percentage.');
+                }
             });
 
-            $( '.dice_input' ).change(function(){
-                calTotal();
-            });
+            let debounceTimer;
+            $( '.dice_input' ).on( 'keydown keypress', function(e) {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(calTotal, 300); 
+            } );
 
         });
 
@@ -98,7 +116,7 @@
         function getDicePercentage(){
 
             $.ajax({
-                url: ' {{ route('web.getPercentage') }} ',
+                url: ' {{ route('admin.getPercentage') }} ',
                 method: 'get',
                 success: function( response ){
 
@@ -121,9 +139,21 @@
                         $( '#dice' + diceIndex +'_num6' ).val(num6);
 
                     });
-                    
-                    calTotal();
 
+                    calTotal();
+                },
+                error: function( error ){
+                    console.log( error );
+                }
+            });
+        }
+
+        function diceNum(){
+            $.ajax({
+                url: ' {{ route('web.getDiceNumber') }} ',
+                method: 'GET',
+                success: function( response ){
+                    $( '#num_dice' ).val( response.data );
                 },
                 error: function( error ){
                     console.log( error );
@@ -132,7 +162,7 @@
         }
 
         function storeDicePercentage(){
-
+            var diceNum = $( '#num_dice' ).val();
             var diceData = {
                 num1: [
                     $('#dice1_num1').val(),
@@ -179,21 +209,20 @@
             };
 
             $.ajax({
-                url: ' {{ route('web.changedicePercentage') }} ',
+                url: ' {{ route('admin.changedicePercentage') }} ',
                 method: 'POST',
                 data: {
                     diceData: diceData,
+                    diceNum: diceNum,
                     _token: '{{ csrf_token() }}',
                 },
                 success: function( response ){
                     alert(" Save percentage successful. ");
-                    console.log(response.data);
                 },
                 error: function( error ){
                     console.log( error );
                 }
             });
-
             
         }
 
@@ -208,6 +237,16 @@
 
                 $( '#dice' + i + '_total' ).val( total );
             }
+        }
+
+        function checkTotal(){
+            let checkTotal = true;
+            for(let i = 1; i <= 5; i++){
+                if ( $( '#dice' + i + '_total' ).val() != 100){
+                    checkTotal = false;
+                }
+            }
+            return checkTotal;
         }
 
     </script>

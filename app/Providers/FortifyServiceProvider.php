@@ -10,15 +10,12 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\{
     Hash,
     RateLimiter,
-    Validator,
 };
 
 use Laravel\Fortify\Fortify;
 
 use App\Models\{
-    Administrator,
-    ActivityLog,
-    User,
+    administrators,
 };
 
 use Helper;
@@ -34,7 +31,10 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        
+        if( request()->is( 'backoffice/*' ) ) {
+            config()->set( 'fortify.guard', 'admin' );
+            config()->set( 'fortify.home', '/admin/home' );
+        }
     }
 
     /**
@@ -45,7 +45,7 @@ class FortifyServiceProvider extends ServiceProvider
         
         Fortify::authenticateUsing( function ( Request $request ) {
 
-            $user = User::where( 'phone_number', $request->username )->first();
+            $user = administrators::where( 'email', $request->username )->first();
  
             if ($user && Hash::check( $request->password, $user->password )) {
                 return $user;

@@ -2,30 +2,18 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use App\Models\diceResult;
 
-class User extends Authenticatable
+class administrators extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
-        'name',
         'email',
-        'phone_number',
         'password',
-        'change',
-        'result',
-        'role',
     ];
 
     /**
@@ -45,9 +33,5 @@ class User extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
-
-    // public function diseResult() {
-    //     return $this->hasMany( diseResult::class, 'user_id' );
-    // }
 
 }
