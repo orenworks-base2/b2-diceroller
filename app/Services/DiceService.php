@@ -90,7 +90,7 @@ class DiceService {
         $user = user::find( $user_id );
 
         if( $user->result ){
-            //return false;
+            return false;
         }
 
         return true;
@@ -205,9 +205,9 @@ class DiceService {
             $filter = true;
         }
 
-        if ( !empty( $request->created_date ) ) {
-            if ( str_contains( $request->created_date, 'to' ) ) {
-                $dates = explode( ' to ', $request->created_date );
+        if ( !empty( $request->created_at ) ) {
+            if ( str_contains( $request->created_at, 'to' ) ) {
+                $dates = explode( ' to ', $request->created_at );
 
                 $startDate = explode( '-', $dates[0] );
                 $start = Carbon::create( $startDate[0], $startDate[1], $startDate[2], 0, 0, 0, 'Asia/Kuala_Lumpur' );
@@ -218,7 +218,7 @@ class DiceService {
                 $model->whereBetween( 'created_at', [ date( 'Y-m-d H:i:s', $start->timestamp ), date( 'Y-m-d H:i:s', $end->timestamp ) ] );
             } else {
 
-                $dates = explode( '-', $request->created_date );
+                $dates = explode( '-', $request->created_at );
 
                 $start = Carbon::create( $dates[0], $dates[1], $dates[2], 0, 0, 0, 'Asia/Kuala_Lumpur' );
                 $end = Carbon::create( $dates[0], $dates[1], $dates[2], 23, 59, 59, 'Asia/Kuala_Lumpur' );

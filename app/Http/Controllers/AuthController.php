@@ -23,4 +23,5 @@ class AuthController extends Controller
     public function createUser( Request $request ) {
         return UserService::createUser( $request );
     }
+
 }

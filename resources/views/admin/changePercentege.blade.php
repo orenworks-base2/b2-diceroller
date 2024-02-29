@@ -5,14 +5,32 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Dice Roller Controller</title>
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="{{ asset( 'css/bootstrap.min.css' ) }}" rel="stylesheet" />
+        <link href="{{ asset( 'css/bootstrap-extended.css' ) }}" rel="stylesheet" />
+        <link href="{{ asset( 'css/dataTables.bootstrap5.min.css' ) }}" rel="stylesheet">
+        <link href="{{ asset( 'css/custom.css' ) }}" rel="stylesheet" />
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+
 		<link rel="stylesheet" type="text/css" href=" {{ asset( 'css/dice.css' ) }} " />
+        <script src="{{ asset( 'js/bootstrap.bundle.min.js' ) }}"></script>
 		
 	</head>
 	<body>
+        <?php echo view('template/nav'); ?>
+        <?php echo view('template/modal-success'); ?>
+        <?php echo view('template/modal-warning'); ?>
+
         <h2 class="text-center">Dice Roller Controller</h2>
         <div id="diceController" class="container">
             <div class="row">
@@ -76,7 +94,8 @@
                 <input class="col-sm" type="text" id="dice5_total" readonly>
             </div>
 
-            <select id="num_dice">
+            <label for="num_dice">Number of Dice</label>
+            <select id="num_dice" name="num_dice">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -100,7 +119,8 @@
                 if( checkTotal() ){
                     storeDicePercentage();
                 }else{
-                    alert('each dice must have total 100 percentage.');
+                    $('#error-modal').modal('show');
+                    $( '#modal_error_body' ).html('Each dice must have a total of 100%.');
                 }
             });
 
@@ -150,7 +170,7 @@
 
         function diceNum(){
             $.ajax({
-                url: ' {{ route('web.getDiceNumber') }} ',
+                url: ' {{ route('admin.getDiceNumber') }} ',
                 method: 'GET',
                 success: function( response ){
                     $( '#num_dice' ).val( response.data );
@@ -217,7 +237,8 @@
                     _token: '{{ csrf_token() }}',
                 },
                 success: function( response ){
-                    alert(" Save percentage successful. ");
+                    $('#success-modal').modal('show');
+                    $( '#modal_success_body' ).html('Save percentage successful.');
                 },
                 error: function( error ){
                     console.log( error );

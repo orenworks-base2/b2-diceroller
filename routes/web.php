@@ -19,17 +19,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::prefix( 'register' )->group( function() {
-    Route::post( '/', [ AuthController::class, 'createUser' ] )->middleware( 'guest:admin' )->name( 'web.createUser' );
-    Route::get( '/', [ AuthController::class, 'register' ] )->middleware( 'guest:admin' )->name( 'web.register' );
-} );
-
+// admin
 Route::prefix( 'backoffice' )->group( function() {
     $limiter = config( 'fortify.limiters.login' );
     Route::get( 'login', [ AuthController::class, 'login' ] )->middleware( 'guest:admin' )->name( 'admin.login' );
     Route::post( 'login', [ AuthenticatedSessionController::class, 'store' ] )->middleware( array_filter( [ 'guest:admin', $limiter ? 'throttle:'.$limiter : null ] ) )->name( 'admin.admin_login' );
-    Route::post( 'logout', [ AuthController::class, 'logoutLog' ] )->name( 'admin.logoutLog' );
+    Route::get( 'log-out', function() {
+        auth()->guard( 'admin' )->logout();
+        return redirect()->route( 'admin.login' );
+    } )->name( 'admin._logout' );
 
     Route::middleware( [ 'auth:admin' ] )->group( function() {
         Route::get( '/admin', [ DiceResultController::class, 'admin' ] )->name( 'admin.admin' );
@@ -38,11 +36,26 @@ Route::prefix( 'backoffice' )->group( function() {
         Route::post( '/changedicePercentage', [ DiceResultController::class, 'changePercentage' ] )->name( 'admin.changedicePercentage' );
         Route::post( '/getResult', [ DiceResultController::class, 'getResultUser' ] )->name( 'admin.getResultUser' );
         Route::get( '/getPercentage', [ DiceResultController::class, 'getPercentage' ] )->name( 'admin.getPercentage' );
+        Route::get( '/getDiceNumber', [ DiceResultController::class, 'getDiceNumber' ] )->name( 'admin.getDiceNumber' );
 
     } );
 } );
 
-    Route::get( '/home', [ DiceResultController::class, 'index' ] )->name( 'web.home' );
-    Route::get( '/diceResult', [ DiceResultController::class, 'getDiceResult' ] )->name( 'web.getDiceResult' );
-    Route::get( '/getDiceNumber', [ DiceResultController::class, 'getDiceNumber' ] )->name( 'web.getDiceNumber' );
-    Route::post( '/logout', [ AuthController::class, 'logoutLog' ] )->name( 'admin.logoutLog' );
+// End admin
+
+// web
+    Route::prefix( 'register' )->group( function() {
+        Route::post( '/', [ AuthController::class, 'createUser' ] )->middleware( 'guest:web' )->name( 'web.createUser' );
+        Route::get( '/', [ AuthController::class, 'register' ] )->middleware( 'guest:web' )->name( 'web.register' );
+    } );
+
+    Route::middleware( [ 'auth:web' ] )->group( function() {
+        Route::get( '/home', [ DiceResultController::class, 'index' ] )->name( 'web.home' );
+        Route::get( '/diceResult', [ DiceResultController::class, 'getDiceResult' ] )->name( 'web.getDiceResult' );
+        Route::get( '/getDiceNumber', [ DiceResultController::class, 'getDiceNumber' ] )->name( 'web.getDiceNumber' );
+        Route::get( 'log-out', function() {
+            auth()->guard( 'web' )->logout();
+            return redirect()->route( 'web.register' );
+        } )->name( 'web._logout' );
+    } );
+// End web

@@ -1,5 +1,5 @@
-body{
-  background: #f0f0f0;
+body {
+  background-color: white !important;
 }
 .container{
   perspective: 1000px;
@@ -190,4 +190,18 @@ color: #eee !important;
 }
 .list-inline{
   text-align: center;
+}
+
+.modal_h1{
+  text-align: center;
+  width: 100%;
+}
+
+.navbar{
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.logout-a{
+  color: rgba(0, 0, 0, 0.55) !important;
 }

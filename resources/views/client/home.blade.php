@@ -14,15 +14,12 @@
 	<body>
     @if($haveChange)
 	<div class="container list-inline">
-        <button class="backRegister"> < </button>
+        <a class="backRegister" href="{{ route( 'web._logout' ) }}"><button> < </button></a>
         <div id="setting_dice" class="fixed-bottom">
             <button class="dice_btn" id="roll_btn"> roll </button>
         </div>
         <div class="div_dise">
-            <div class="cube5 cube list-inline-item" id="cube">
-            </div>
-            <div class="cube3 cube list-inline-item" id="cube">
-            </div>
+            
             <div class="cube1 cube list-inline-item" id="cube">
                 <div class="front">
                 </div>
@@ -39,12 +36,19 @@
             </div>
             <div class="cube2 cube list-inline-item" id="cube">
             </div>
+            <div class="cube3 cube list-inline-item" id="cube">
+            </div>
             <div class="cube4 cube list-inline-item" id="cube">
             </div>
+            <div class="cube5 cube list-inline-item" id="cube">
+            </div>
         </div>
-        
-        
+         
 	</div>
+    @else
+    <h2> No change for roll </h2>
+    <a class="backRegister" href="{{ route( 'web._logout' ) }}">back</a>
+    @endif
     
 	<script>
         $(document).ready(function() {
@@ -131,8 +135,6 @@
         });
 
     </script>
-    @else
-    <h2> No change for roll </h2>
-    @endif
+    
 	</body>
 </html>

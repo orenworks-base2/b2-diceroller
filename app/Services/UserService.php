@@ -50,8 +50,9 @@ class UserService {
 
         if( $user ){ 
             if( Hash::check( $request->password, $user->password ) ){
+                Auth::attempt(['phone_number' => $request->phone_number, 'password' => $request->password]);
                 return response()->json([
-                    'message_key' => 'Login_success',
+                    'message_key' => 'Login successful',
                     'data' => [],
                 ]);
             }else{
@@ -70,7 +71,7 @@ class UserService {
         }
 
         try {
-
+            
             $createUserObject['user'] = [
                 'phone_number' => $request->phone_number,
                 'password' => Hash::make( $request->password ),
@@ -83,7 +84,7 @@ class UserService {
 
             if (Auth::attempt(['phone_number' => $request->phone_number, 'password' => $request->password])) {
                 return response()->json([
-                    'message_key' => 'register_and_login_success',
+                    'message_key' => 'Register Successful',
                     'data' => [],
                 ]);
             } else {

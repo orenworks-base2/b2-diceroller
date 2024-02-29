@@ -8,7 +8,17 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+        <script src="{{ asset( 'js/bootstrap.bundle.min.js' ) }}"></script>
 
     <style>
     @import url(https://fonts.googleapis.com/css?family=Roboto:300);
@@ -102,7 +112,7 @@
     color: #EF3B3A;
     }
     body {
-    background: #76b852; /* fallback for old browsers */
+    background: #76b852; 
     background: rgb(141,194,111);
     background: linear-gradient(90deg, rgba(141,194,111,1) 0%, rgba(118,184,82,1) 50%);
     font-family: "Roboto", sans-serif;
@@ -112,10 +122,12 @@
     </style>
 </head>
 <body>
+    <?php echo view('template/modal-success'); ?>
+    <?php echo view('template/modal-warning'); ?>
     <div class="login-page">
     <h1 class="text-center">Dice Roller</h1>
     <div class="form">
-        <form class="login_form" action="" method="POST" onsubmit=" event.preventDefault(); ">
+        <form class="login_form" action="" method="POST" onsubmit=" event.preventDefault(); "  autocomplete="off">
             @csrf
             <h3>Register</h3>
             <input name="phone_number" id="reg_phone" type="text" placeholder="Phone Number"/>
@@ -143,9 +155,11 @@
                 _token: '{{ csrf_token() }}',
             },
             success: function( response ){
-                console.log( response );
-                alert(" Register successful. ");
-                window.location.href = '{{ route('web.home') }}';
+                $('#success-modal').modal('show');
+                $( '#modal_success_body' ).html( response.message_key );
+                $('#success-modal').on('hidden.bs.modal', function (e) {
+                    window.location.href = '{{ route('web.home') }}';
+                });
             },
             error: function( response ){
                 var errorMessage;
@@ -154,12 +168,11 @@
                 } else {
                     errorMessage = "An unknown error occurred.";
                 }
-                alert(errorMessage);
+                $('#error-modal').modal('show');
+                $( '#modal_error_body' ).html(errorMessage);
             }
         });
     }
     </script>
-    
-    <?php echo view( 'templates/alert-modal' ); ?>
 
 </body>

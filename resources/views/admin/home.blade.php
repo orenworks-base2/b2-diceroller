@@ -3,10 +3,9 @@
 
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <meta name="description" content="">
+        <meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Dice Roller Home</title>
     
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,6 +19,7 @@
         <link href="{{ asset( 'css/dataTables.bootstrap5.min.css' ) }}" rel="stylesheet">
         <link href="{{ asset( 'css/custom.css' ) }}" rel="stylesheet" />
         {{-- End datatable --}}
+        <link href="{{ asset( 'css/dice.css' ) }}" rel="stylesheet" />
 
         {{-- date --}}
         <link href="{{ asset( 'css/flatpickr.min.css' ) }}" rel="stylesheet">
@@ -68,6 +68,8 @@
         ];
 ?>
     <body> 
+        <?php echo view('template/nav'); ?>
+
         <main class="main_datatable">
             
             <section class="table_phone_number_session">
@@ -115,19 +117,19 @@
                     {
                         targets: parseInt('{{ App\Helpers\Helper::columnIndex( $columns, "phone_number" ) }}'),
                         render: function( data, type, row, meta ) {
-                            return data;
+                            return data ?? '-';
                         },
                     },
                     {
                         targets: parseInt('{{ App\Helpers\Helper::columnIndex( $columns, "change" ) }}'),
                         render: function( data, type, row, meta ) {
-                            return data;
+                            return data ?? '-';
                         },
                     },
                     {
                         targets: parseInt('{{ App\Helpers\Helper::columnIndex( $columns, "result" ) }}'),
                         render: function( data, type, row, meta ) {
-                            return data;
+                            return data ?? '-';
                         },
                     },
                     {
@@ -168,7 +170,7 @@
 
     <script>
         document.addEventListener( 'DOMContentLoaded', function() {
-            window['createdDate'] = $( '#created_date' ).flatpickr( {
+            window['createdDate'] = $( '#created_at' ).flatpickr( {
                 mode: 'range',
                 disableMobile: true,
                 onClose: function( selected, dateStr, instance ) {
