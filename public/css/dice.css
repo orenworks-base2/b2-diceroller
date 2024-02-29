@@ -214,3 +214,8 @@ color: #eee !important;
   padding-left: 20%;
   padding-right: 20%;
 }
+
+#num_dice{
+  width: 60px;
+  height: 30px;
+}
