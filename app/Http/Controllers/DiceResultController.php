@@ -33,8 +33,6 @@ class DiceResultController extends Controller
         return DiceService::getDiceResult();
     }
 
-    
-
     public function getDiceNumber( Request $request ){
         return DiceService::getDiceNumber( $request );
     }

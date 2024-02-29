@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call( [
             AdministratorSeeder::class,
+            DicePercentageSeeder::class,
         ] );
     }
 }

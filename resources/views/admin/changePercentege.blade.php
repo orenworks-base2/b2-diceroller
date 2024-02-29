@@ -32,7 +32,7 @@
         <?php echo view('template/modal-warning'); ?>
 
         <h2 class="text-center">Dice Roller Controller</h2>
-        <div id="diceController" class="container">
+        <div id="diceController" class="div_controller">
             <div class="row">
                 <label class="col-sm">Dice Number</label>
                 <label class="col-sm">Percentage Number 1</label>

@@ -14,9 +14,7 @@ class Helper {
     }
     
     public static function percentageDice( $num , $numDice){
-
         return self::calPercentage( $num, $numDice );
-        
     }
 
     public static function columnIndex( $object, $search ) {

@@ -198,8 +198,8 @@ color: #eee !important;
 }
 
 .navbar{
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: 20%;
+  padding-right: 20%;
 }
 
 .logout-a{
@@ -209,4 +209,8 @@ color: #eee !important;
 .btn_logout{
   width: 40px;
   height: 30px;
+}
+.div_controller{
+  padding-left: 20%;
+  padding-right: 20%;
 }

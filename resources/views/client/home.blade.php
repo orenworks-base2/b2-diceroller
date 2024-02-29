@@ -104,7 +104,6 @@
                 $.each( result, function( index, value ) {
                     cubeIndex = index + 1;
                     $('.cube' + cubeIndex).css('transform', 'rotateX('+angleArray[value][0]+'deg) rotateY('+angleArray[value][1]+'deg) rotateZ('+angleArray[value][2]+'deg)');
-                    console.log(value);
                 });
 
                 angleArray = [[0,0,0],[-310,-362,-38],[-400,-320,-2],[135,-217,-88],[-224,-317,5],[-47,-219,-81],[-133,-360,-53]];
