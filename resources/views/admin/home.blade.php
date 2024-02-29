@@ -56,7 +56,7 @@
             ],
             [
                 'type' => 'default',
-                'id' => 'Result',
+                'id' => 'result',
                 'title' => 'Result' 
             ],
             [
@@ -129,7 +129,11 @@
                     {
                         targets: parseInt('{{ App\Helpers\Helper::columnIndex( $columns, "result" ) }}'),
                         render: function( data, type, row, meta ) {
-                            return data ?? '-';
+                            var dataArray = JSON.parse(data);
+                            if (Array.isArray(dataArray)) {
+                                return dataArray.join(',');
+                            }
+                            return '-';
                         },
                     },
                     {

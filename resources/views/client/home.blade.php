@@ -14,12 +14,11 @@
 	<body>
     @if($haveChange)
 	<div class="container list-inline">
-        <a class="backRegister" href="{{ route( 'web._logout' ) }}"><button> < </button></a>
+        <a class="backRegister" href="{{ route( 'web._logout' ) }}"><button class="btn_logout"> < </button></a>
         <div id="setting_dice" class="fixed-bottom">
             <button class="dice_btn" id="roll_btn"> roll </button>
         </div>
         <div class="div_dise">
-            
             <div class="cube1 cube list-inline-item" id="cube">
                 <div class="front">
                 </div>
@@ -43,11 +42,11 @@
             <div class="cube5 cube list-inline-item" id="cube">
             </div>
         </div>
-         
 	</div>
     @else
-    <h2> No change for roll </h2>
-    <a class="backRegister" href="{{ route( 'web._logout' ) }}">back</a>
+    <script>
+        window.location.href = '{{ route('web._logout') }}';
+    </script>
     @endif
     
 	<script>
@@ -58,11 +57,12 @@
                 $('.cube' + i).html(diceFacesHTML.repeat(1));
                 $('.cube' + i).hide();
             }
+            
             diceNum();
 
             $('#roll_btn').click(function(){
                 getDiceResult();
-                $(' #setting_dice ').addClass("hiddenDice");
+                $(' #setting_dice ').hide();
             });
 
             function getDiceResult(){

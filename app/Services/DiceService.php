@@ -119,7 +119,7 @@ class DiceService {
             $user_id = $currentUser->id;
             
             $user = user::find( $user_id );
-            $user->result = json_encode($resultDice);;
+            $user->result = json_encode($resultDice);
             $user->change = 'done';
             $user->save();
 

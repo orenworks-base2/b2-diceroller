@@ -205,3 +205,8 @@ color: #eee !important;
 .logout-a{
   color: rgba(0, 0, 0, 0.55) !important;
 }
+
+.btn_logout{
+  width: 40px;
+  height: 30px;
+}
