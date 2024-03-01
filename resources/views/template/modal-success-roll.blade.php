@@ -82,34 +82,12 @@ body, html {
         
     <div class="modal-dialog modal-confirm">
 		<div class="modal-content">
-			<div class="modal-body text-center container_dice" >
-				<div class="div_dise">
-                    <div class="cube1 cube list-inline-item" id="cube">
-                        <div class="front">
-                        </div>
-                        <div class="back">
-                        </div>
-                        <div class="top">
-                        </div>
-                        <div class="left">
-                        </div>
-                        <div class="right">
-                        </div>
-                        <div class="bottom">
-                        </div>
-                    </div>
-                    <div class="cube2 cube list-inline-item" id="cube">
-                    </div>
-                    <div class="cube3 cube list-inline-item" id="cube">
-                    </div>
-                    <div class="cube4 cube list-inline-item" id="cube">
-                    </div>
-                    <div class="cube5 cube list-inline-item" id="cube">
-                    </div>
-                </div>
+			<div class="modal-body text-center " >
+				<h4 class="text_bigger margin_top">Congratulations!</h4>
+                <p class="text_bigger" id="text_modal">You have rolled number(s):</p>
 			</div>
             <div  class="modal-body text-center btn_div">
-				<button id="modal-success-close2" class="btn btn-success" data-dismiss="success-modal"><span>Continue</span> </button>
+				<button id="modal-success-close2" class="btn btn-success text_bigger" data-dismiss="success-modal"><span>OK</span> </button>
             </div>
 		</div>
 	</div>

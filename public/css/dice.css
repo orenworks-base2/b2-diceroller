@@ -9,6 +9,14 @@
   height: 100%;
 }
 
+.text_bigger{
+  font-size: x-large;
+}
+
+.margin_top{
+  margin-top: 20px;
+}
+
 .container_dice .cube{
   position: relative;
   left: 45%;

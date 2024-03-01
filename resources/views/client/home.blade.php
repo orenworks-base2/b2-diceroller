@@ -71,7 +71,7 @@
                 getDiceResult();
                 $(' #setting_dice ').hide();
                 
-                setTimeout(successModal,2500);
+                setTimeout(successModal,4500);
 
             });
 
@@ -127,6 +127,8 @@
                     method: 'GET',
                     success: function( response ){
                         updateRotation(response.data);
+                        var result = response.data;
+                        $('#text_modal').html('You have rolled number(s): <br>' + result.join(','));
                     },
                     error: function( error ){
                         console.log( error );
