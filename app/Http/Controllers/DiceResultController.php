@@ -8,12 +8,7 @@ use Illuminate\Http\Request;
 class DiceResultController extends Controller
 {
     public function index() {
-        
-        $haveChange = false;
-        if(DiceService::checkUser()){
-            $haveChange = true;
-        }
-        return view( 'client.home', ['haveChange' => $haveChange] );
+        return view( 'client.home');
 
     }
 

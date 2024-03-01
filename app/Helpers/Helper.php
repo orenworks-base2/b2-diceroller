@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace app\Helpers;
 
 use App\Models\{
     DicePercentage,
@@ -9,8 +9,8 @@ use App\Models\{
 
 class Helper {
 
-    public static function assetVersion() {
-        return '?v=1.05';
+    public static function backgroundImg() {
+        return 'background.jpg';
     }
     
     public static function percentageDice( $num , $numDice){

@@ -21,7 +21,6 @@ class CreateNewUser implements CreatesNewUsers
     {
         return User::create([
             'phone_number' => $input['phone_number'],
-            'password' => Hash::make($input['password']),
         ]);
 
         

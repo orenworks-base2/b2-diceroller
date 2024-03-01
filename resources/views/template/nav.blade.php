@@ -6,7 +6,7 @@
                 <a class="nav-link" href=" {{ route( 'admin.home' ) }} ">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href=" {{ route( 'admin.admin' ) }} ">Dice Percentage Controller</a>
+                <a class="nav-link" href=" {{ route( 'admin.admin' ) }} ">Setting</a>
             </li>
         </ul>
       

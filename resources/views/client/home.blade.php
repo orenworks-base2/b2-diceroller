@@ -4,19 +4,31 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Dice Roller</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         
 		<link rel="stylesheet" type="text/css" href=" {{ asset( 'css/dice.css' ) }} " />
-		
+		<style>
+        .modal-dialog  {
+            max-width: 95% !important;
+            height: 70% !important;
+            }
+
+            .modal-content{
+            width: 100% !important;
+            height: 70% !important;
+            padding: 0% !important;
+            }
+        </style>
 	</head>
-	<body>
-    @if($haveChange)
-	<div class="container list-inline">
-        <a class="backRegister" href="{{ route( 'web._logout' ) }}"><button class="btn_logout"> < </button></a>
+	<body class="home-body">
+        <?php echo view('template/modal-success-roll'); ?>
+
+	<div class="container_dice list-inline">
         <div id="setting_dice" class="fixed-bottom">
-            <button class="dice_btn" id="roll_btn"> roll </button>
+            <button class="dice_btn btn btn-primary" id="roll_btn"> roll </button>
         </div>
         <div class="div_dise">
             <div class="cube1 cube list-inline-item" id="cube">
@@ -43,11 +55,6 @@
             </div>
         </div>
 	</div>
-    @else
-    <script>
-        window.location.href = '{{ route('web._logout') }}';
-    </script>
-    @endif
     
 	<script>
         $(document).ready(function() {
@@ -63,7 +70,55 @@
             $('#roll_btn').click(function(){
                 getDiceResult();
                 $(' #setting_dice ').hide();
+                
+                setTimeout(successModal,2500);
+
             });
+
+            $('#modal-success-close2').click(function(){
+                window.location.href = '{{ route('web._logout') }}';
+            });
+
+            function successModal() {
+                for (let cubeIndex = 1; cubeIndex <= 5; cubeIndex++) {
+                    $('.cube' + cubeIndex).css({
+                        'animation-play-state': 'paused',
+                    });
+                }
+
+                $('#successModal').show();
+
+                const streamerscontainer_dice = document.getElementById('successModal');
+                const startPosition = Math.random() > 0.5 ? 'left' : 'right'; 
+                const colors = ['red', 'blue', 'green', 'yellow', 'orange'];
+
+                for (let i = 0; i < 500; i++) {
+                    const streamer = document.createElement('div');
+                    streamer.classList.add('streamer');
+
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    streamer.style.backgroundColor = randomColor;
+
+                    const startPosX = Math.random() > 0.5 ? -10 : window.innerWidth + 10;
+                    const startPosY = window.innerHeight - 10;
+                    streamer.style.left = `${startPosX}px`;
+                    streamer.style.top = `${startPosY}px`;
+                    streamerscontainer_dice.appendChild(streamer);
+
+                    const targetPosX = window.innerWidth / 2 + (Math.random() * 3000 - 1500);
+                    const targetPosY = window.innerHeight / 2 + (Math.random() * 3000 - 1500);
+
+                    setTimeout(() => {
+                        streamer.style.transition = 'left 3s ease-out, top 3s ease-out';
+                        streamer.style.left = `${targetPosX}px`;
+                        streamer.style.top = `${targetPosY}px`;
+                    }, 100);
+
+                    setTimeout(() => {
+                        streamer.remove();
+                    }, 500); 
+                }
+            }
 
             function getDiceResult(){
 
@@ -126,11 +181,7 @@
                         'animation-timing-function': 'linear'
                     });
                 });
-
-
-
             }
-
         });
 
     </script>

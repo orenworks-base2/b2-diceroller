@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('phone_number')->nullable()->unique();
             $table->string('password')->nullable();
-            $table->string('change')->nullable();
             $table->string('result')->nullable();
             $table->timestamps();
         });

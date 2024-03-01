@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class DiceNumSeeder extends Seeder
 {
@@ -16,7 +15,7 @@ class DiceNumSeeder extends Seeder
     public function run()
     {
         DB::table( 'dice_settings' )->insert([
-            'dice_num' => '1',
+            'diceNum' => '1',
         ]);
     }
 }

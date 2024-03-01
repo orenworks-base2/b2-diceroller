@@ -82,21 +82,6 @@ class DiceService {
         ] );
     }
 
-    public static function checkUser(){
-
-        $currentUser = auth()->user();
-        $user_id = $currentUser->id;
-
-        $user = user::find( $user_id );
-
-        if( $user->result ){
-            return false;
-        }
-
-        return true;
-
-    }
-
     public static function getDiceResult(){
 
         $dice = DiceSetting::first();
@@ -112,15 +97,12 @@ class DiceService {
 
         DB::beginTransaction();
 
-        
-
         try{
             $currentUser = auth()->user();
             $user_id = $currentUser->id;
             
             $user = user::find( $user_id );
             $user->result = json_encode($resultDice);
-            $user->change = 'done';
             $user->save();
 
             DB::commit();
@@ -143,7 +125,7 @@ class DiceService {
 
     public static function getResultUser( Request $request ){
 
-        $resultDice = User::select('phone_number', 'change', 'result', 'created_at');
+        $resultDice = User::select('phone_number','result', 'created_at')->where('result', '!=' , null);
 
         $filterObject = self::filter( $request, $resultDice );
         $User = $filterObject['model'];
@@ -156,9 +138,6 @@ class DiceService {
                     $User->orderBy( 'phone_number', $dir );
                     break;
                 case 2:
-                    $User->orderBy( 'change', $dir );
-                    break;
-                case 3:
                     $User->orderBy( 'create_at', $dir );
                     break;
             }
@@ -197,11 +176,6 @@ class DiceService {
 
         if ( !empty( $request->phone_number ) ) {
             $model->where('users.phone_number', 'LIKE', '%'. $request->phone_number .'%')->get();
-            $filter = true;
-        }
-
-        if ( !empty( $request->change ) ) {
-            $model->where( 'users.change', $request->change );
             $filter = true;
         }
 

@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title> Dice Roller </title>
+    <title> Lucky Dice</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href=" {{ asset( 'css/dice.css' ) }} " />
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -18,7 +19,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     
-        <script src="{{ asset( 'js/bootstrap.bundle.min.js' ) }}"></script>
+    <script src="{{ asset( 'js/bootstrap.bundle.min.js' ) }}"></script>
 
     <style>
     @import url(https://fonts.googleapis.com/css?family=Roboto:300);
@@ -93,12 +94,12 @@
     margin: 50px auto;
     text-align: center;
     }
-    .container .info h1 {
+    h1 {
     margin: 0 0 15px;
     padding: 0;
     font-size: 36px;
     font-weight: 300;
-    color: #1a1a1a;
+    color: white !important;
     }
     .container .info span {
     color: #4d4d4d;
@@ -121,21 +122,18 @@
     }
     </style>
 </head>
-<body>
-    <?php echo view('template/modal-success'); ?>
+<body class="home-body">
     <?php echo view('template/modal-warning'); ?>
     <div class="login-page">
-    <h1 class="text-center">Dice Roller</h1>
+    <h1 class="text-center">Lucky Dice</h1>
     <div class="form">
         <form class="login_form" action="" method="POST" onsubmit=" event.preventDefault(); "  autocomplete="off">
             @csrf
             <h3>Register</h3>
             <input name="phone_number" id="reg_phone" type="text" placeholder="Phone Number"/>
-            <input name="password" id="reg_password" type="password" placeholder="password"/>
-            <button id="btnRegister" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >create</button>
+            <button id="btnRegister" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >Play</button>
             
         </form>
-        
     </div>
     </div>
 
@@ -151,15 +149,10 @@
             method: 'POST',
             data: {
                 phone_number: $('#reg_phone').val(),
-                password: $('#reg_password').val(),
                 _token: '{{ csrf_token() }}',
             },
             success: function( response ){
-                $('#success-modal').modal('show');
-                $( '#modal_success_body' ).html( response.message_key );
-                $('#success-modal').on('hidden.bs.modal', function (e) {
-                    window.location.href = '{{ route('web.home') }}';
-                });
+                window.location.href = '{{ route('web.home') }}';
             },
             error: function( response ){
                 var errorMessage;

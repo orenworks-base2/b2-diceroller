@@ -53,9 +53,6 @@ Route::prefix( 'backoffice' )->group( function() {
         Route::get( '/home', [ DiceResultController::class, 'index' ] )->name( 'web.home' );
         Route::get( '/diceResult', [ DiceResultController::class, 'getDiceResult' ] )->name( 'web.getDiceResult' );
         Route::get( '/getDiceNumber', [ DiceResultController::class, 'getDiceNumber' ] )->name( 'web.getDiceNumber' );
-        Route::get( 'log-out', function() {
-            auth()->guard( 'web' )->logout();
-            return redirect()->route( 'web.register' );
-        } )->name( 'web._logout' );
+        Route::get( '/log-out', [ AuthController::class, 'logout' ] )->name( 'web._logout' );
     } );
 // End web

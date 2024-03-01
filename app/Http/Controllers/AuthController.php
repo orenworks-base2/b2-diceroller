@@ -24,4 +24,11 @@ class AuthController extends Controller
         return UserService::createUser( $request );
     }
 
+    public function logout(){
+        UserService::logout();
+        
+        auth()->guard( 'web' )->logout();
+        return redirect()->route( 'web.register' );
+    }
+
 }

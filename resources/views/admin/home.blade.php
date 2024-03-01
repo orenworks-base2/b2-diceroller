@@ -27,32 +27,12 @@
         
     </head>
 <?php
-    $change = [
-        [
-            'title' => 'Search Change',
-            'value' => '',
-        ],
-        [
-            'title' => 'done',
-            'value' => 'done',
-        ],
-        [
-            'title' => 'have',
-            'value' => 'have',
-        ],
-    ];
     $columns = [
             [
                 'type' => 'input',
                 'placeholder' => 'Search Phone Number',
                 'id' => 'phone_number',
                 'title' => 'Phone Number' 
-            ],
-            [
-                'type' => 'select',
-                'options' => $change,
-                'id' => 'change',
-                'title' => 'Change'
             ],
             [
                 'type' => 'default',
@@ -109,19 +89,12 @@
                 order: [[ 1, 'desc' ]],
                 columns: [
                     { data: 'phone_number' },
-                    { data: 'change' },
                     { data: 'result' }, 
                     { data: 'created_at' },
                 ],
                 columnDefs: [
                     {
                         targets: parseInt('{{ App\Helpers\Helper::columnIndex( $columns, "phone_number" ) }}'),
-                        render: function( data, type, row, meta ) {
-                            return data ?? '-';
-                        },
-                    },
-                    {
-                        targets: parseInt('{{ App\Helpers\Helper::columnIndex( $columns, "change" ) }}'),
                         render: function( data, type, row, meta ) {
                             return data ?? '-';
                         },
