@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\{
 use Laravel\Fortify\Fortify;
 
 use App\Models\{
-    administrators,
+    Administrators,
 };
 
 use Helper;
@@ -45,7 +45,7 @@ class FortifyServiceProvider extends ServiceProvider
         
         Fortify::authenticateUsing( function ( Request $request ) {
 
-            $user = administrators::where( 'email', $request->username )->first();
+            $user = Administrators::where( 'email', $request->username )->first();
  
             if ($user && Hash::check( $request->password, $user->password )) {
                 return $user;
