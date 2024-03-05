@@ -43,7 +43,7 @@ class UserService {
         DB::beginTransaction();
 
         $user = User::where( 'phone_number', $request->phone_number )->first();
-        
+
         if( $user ){ 
             return response()->json([
                 'message' => 'No change for roll'
@@ -54,7 +54,7 @@ class UserService {
             
             $createUserObject['user'] = [
                 'phone_number' => $request->phone_number,
-                'password' => '123',
+                'password' => Hash::make( '123' ),
             ];
 
             $createUser = User::create( $createUserObject['user'] );

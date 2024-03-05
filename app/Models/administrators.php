@@ -30,8 +30,8 @@ class administrators extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'password' => 'hashed',
-    ];
+    // protected $casts = [
+    //     'password' => 'hashed',
+    // ];
 
 }
